@@ -3,6 +3,7 @@
   --bosch-blue-hover: #00629a;
   --bosch-blue-pressed: #004975;
   --bosch-turquoise: #18837e;
+  --bosch-red: #ed0007;
   --bosch-gray-10: #1a1c1d;
   --bosch-gray-50: #71767c;
   --bosch-gray-80: #c1c7cc;
@@ -406,4 +407,203 @@ body {
 
 .tab-bar__icon-inner {
   fill: var(--bosch-white);
+}
+
+.draft,
+.rider-login {
+  padding: 20px 16px 16px;
+}
+
+.draft__header,
+.rider-login__header {
+  margin-bottom: 16px;
+}
+
+.draft__title,
+.rider-login__title {
+  margin: 0;
+  font-size: 24px;
+  font-weight: 700;
+}
+
+.draft__section,
+.rider-login__form {
+  margin-bottom: 16px;
+  padding: 16px;
+  border-radius: var(--radius-card);
+  background-color: var(--bosch-white);
+  border: 1px solid var(--bosch-gray-90);
+}
+
+.draft__section-title {
+  margin: 0 0 12px;
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--bosch-blue);
+}
+
+.draft__preview {
+  display: block;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  margin-bottom: 12px;
+  border-radius: var(--radius-card);
+  object-fit: cover;
+  background-color: var(--bosch-gray-95);
+}
+
+.draft__delete {
+  margin-top: 12px;
+}
+
+.field {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.field .field__label {
+  margin-bottom: 6px;
+}
+
+.field__input,
+.field__input.form-control {
+  width: 100%;
+  padding: 10px 12px;
+  border: 1px solid var(--bosch-gray-90);
+  border-radius: var(--radius-button);
+  font-family: inherit;
+  font-size: 15px;
+  color: var(--bosch-gray-10);
+  background-color: var(--bosch-white);
+}
+
+.field__input:hover {
+  border-color: var(--bosch-blue);
+}
+
+.field__input:focus,
+.field__input.form-control:focus {
+  border-color: var(--bosch-blue);
+  outline: 2px solid var(--bosch-blue);
+  outline-offset: 1px;
+  box-shadow: none;
+}
+
+.field__input--textarea {
+  resize: vertical;
+}
+
+.field__input--file,
+.field__input--file.form-control {
+  padding: 8px 12px;
+  font-size: 13px;
+}
+
+.field__input--file::file-selector-button {
+  margin: 0 10px 0 0;
+  padding: 6px 12px;
+  border: 0;
+  border-radius: var(--radius-button);
+  background-color: var(--bosch-blue);
+  color: var(--bosch-white);
+  font-family: inherit;
+  font-size: 13px;
+  cursor: pointer;
+}
+
+.field__input--file:hover:not(:disabled):not([readonly])::file-selector-button {
+  background-color: var(--bosch-blue-hover);
+}
+
+.button:disabled,
+.button.btn:disabled {
+  background-color: var(--bosch-gray-80);
+  color: var(--bosch-white);
+  opacity: 1;
+}
+
+.button--secondary,
+.button--secondary.btn {
+  background-color: var(--bosch-white);
+  color: var(--bosch-blue);
+  border: 1px solid var(--bosch-blue);
+}
+
+.button--secondary:hover,
+.button--secondary.btn:hover {
+  background-color: var(--bosch-gray-95);
+  color: var(--bosch-blue-hover);
+  border-color: var(--bosch-blue-hover);
+}
+
+.mode-card__delete {
+  margin-top: 10px;
+  padding: 8px 12px;
+  font-size: 14px;
+}
+
+.screen-error {
+  margin: 0 0 16px;
+  padding: 10px 12px;
+  border: 0;
+  border-left: 3px solid var(--bosch-red);
+  border-radius: var(--radius-button);
+  background-color: rgba(237, 0, 7, 0.08);
+  font-size: 14px;
+  color: var(--bosch-red);
+}
+
+.feed__error {
+  margin: 12px 0 auto;
+  background-color: var(--bosch-white);
+}
+
+.feed > .feed__error {
+  position: absolute;
+  top: 24px;
+  left: 16px;
+  right: 16px;
+  margin: 0;
+}
+
+.like--button {
+  padding: 0;
+  border: 0;
+  background: none;
+  cursor: pointer;
+}
+
+.like--button:disabled {
+  opacity: 0.6;
+  cursor: default;
+}
+
+.like--liked .like__icon {
+  fill: var(--bosch-red);
+}
+
+button.tab-bar__link {
+  border: 0;
+  background: none;
+}
+
+.loading-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background-color: rgba(239, 241, 242, 0.6);
+  cursor: progress;
+}
+
+.loading-overlay__spinner {
+  width: 48px;
+  height: 48px;
+  color: var(--bosch-blue);
+}
+
+.rider-login__register {
+  margin-top: 12px;
 }

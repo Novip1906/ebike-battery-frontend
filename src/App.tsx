@@ -4,6 +4,8 @@ import { ROUTES } from './Routes'
 import { AppLayout } from './AppLayout'
 import MotorModesPage from './pages/MotorModesPage'
 import MotorModeFeedPage from './pages/MotorModeFeedPage'
+import MotorModeDraftPage from './pages/MotorModeDraftPage'
+import RiderLoginPage from './pages/RiderLoginPage'
 
 const App: FC = () => (
   <BrowserRouter>
@@ -13,6 +15,8 @@ const App: FC = () => (
         <Route path={ROUTES.GRID} element={<MotorModesPage />} />
         <Route path={ROUTES.FEED} element={<MotorModeFeedPage />} />
         <Route path={`${ROUTES.FEED}/:motorModeId`} element={<MotorModeFeedPage />} />
+        <Route path={ROUTES.DRAFT} element={<MotorModeDraftPage />} />
+        <Route path={ROUTES.LOGIN} element={<RiderLoginPage />} />
         <Route path="*" element={null} />
       </Route>
     </Routes>

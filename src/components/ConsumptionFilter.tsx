@@ -7,12 +7,14 @@ interface Props {
   max: number
   onChange: (value: number) => void
   onSearch: () => void
+  disabled?: boolean
 }
 
 const TICKS = 5
 
-export const ConsumptionFilter: FC<Props> = ({ value, min, max, onChange, onSearch }) => {
-  const ticks = Array.from({ length: TICKS }, (_, i) => min + ((max - min) * i) / (TICKS - 1))
+export const ConsumptionFilter: FC<Props> = ({ value, min, max, onChange, onSearch, disabled = false }) => {
+  const span = max - min
+  const ticks = span > 0 ? Array.from({ length: TICKS }, (_, i) => min + (span * i) / (TICKS - 1)) : [max]
 
   const handleSubmit = (event: FormEvent) => {
     event.preventDefault()
@@ -34,13 +36,13 @@ export const ConsumptionFilter: FC<Props> = ({ value, min, max, onChange, onSear
         onChange={(event) => onChange(Number(event.target.value))}
       />
       <div className="slider__scale">
-        {ticks.map((tick) => (
-          <span key={tick} className="slider__tick" style={{ left: `${((tick - min) / (max - min)) * 100}%` }}>
+        {ticks.map((tick, index) => (
+          <span key={index} className="slider__tick" style={{ left: `${span > 0 ? ((tick - min) / span) * 100 : 100}%` }}>
             {tick.toFixed(1)}
           </span>
         ))}
       </div>
-      <Button type="submit" className="button button--primary button--wide">
+      <Button type="submit" className="button button--primary button--wide" disabled={disabled}>
         Найти
       </Button>
     </Form>
