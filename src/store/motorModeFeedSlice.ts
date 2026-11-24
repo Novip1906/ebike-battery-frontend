@@ -2,6 +2,7 @@ import { createSlice } from '@reduxjs/toolkit'
 import { api } from '../api'
 import { isBackendUnavailable, rejectMessage } from '../modules/errors'
 import { motorModeFeedMock, toMotorModeDetail, type MotorModeDetail } from '../modules/motorModes'
+import { PAGES_MOCK } from '../modules/pages'
 import { createMotorModeThunk } from './hooks'
 import { resetRider } from './riderSlice'
 
@@ -34,6 +35,9 @@ const NOT_FOUND = 'Режим работы мотора не найден.'
 export const getMotorModeFeed = createMotorModeThunk(
   'motorModeFeed/getMotorModeFeed',
   async ({ motorModeId, next = false }: FeedRequest, { getState, rejectWithValue, signal }) => {
+    if (PAGES_MOCK) {
+      return motorModeFeedMock(motorModeId, next) ?? rejectWithValue({ guest: false, message: NOT_FOUND })
+    }
     try {
       const { data } =
         motorModeId === undefined

@@ -87,12 +87,13 @@ const mockCard = ({
 
 export const motorModesMock = (maxConsumptionWhPerKm: number | null): MotorModesResult => {
   const consumptions = MOTOR_MODES_MOCK.map(consumptionOf)
+  const consumptionMin = Math.min(...consumptions)
   const consumptionMax = Math.ceil(Math.max(...consumptions))
-  const max = Math.min(maxConsumptionWhPerKm ?? consumptionMax, consumptionMax)
+  const max = Math.max(consumptionMin, Math.min(maxConsumptionWhPerKm ?? consumptionMax, consumptionMax))
   return {
     motor_modes: MOTOR_MODES_MOCK.filter((motorMode) => consumptionOf(motorMode) <= max).map(mockCard),
     max_consumption_wh_per_km: max,
-    consumption_min: Math.min(...consumptions),
+    consumption_min: consumptionMin,
     consumption_max: consumptionMax,
   }
 }

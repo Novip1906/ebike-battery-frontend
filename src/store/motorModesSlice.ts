@@ -2,6 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { api } from '../api'
 import { errorMessage, isBackendUnavailable, rejectMessage } from '../modules/errors'
 import { motorModesMock, toMotorModesResult, type MotorModeCardData, type MotorModesResult } from '../modules/motorModes'
+import { PAGES_MOCK } from '../modules/pages'
 import { createMotorModeThunk } from './hooks'
 import { resetRider } from './riderSlice'
 
@@ -32,6 +33,7 @@ export const getMotorModesList = createMotorModeThunk(
   async (_, { getState, rejectWithValue, signal }) => {
     const { motorModes, rider } = getState()
     const max = motorModes.maxConsumptionWhPerKm
+    if (PAGES_MOCK) return motorModesMock(max)
     try {
       const { data } = await api.motorModes.motorModesList(
         max === null || max >= motorModes.consumptionMax ? undefined : { max_consumption_wh_per_km: max },

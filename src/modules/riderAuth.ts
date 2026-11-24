@@ -1,5 +1,5 @@
 import axios from 'axios'
-import { api } from '../api'
+import { api, backendOptions } from '../api'
 
 export const ACCESS_TOKEN_KEY = 'rider_access_token'
 
@@ -16,6 +16,7 @@ interface RiderLoginResponse {
 }
 
 let sessionToken: string | null = null
+const riderHttp = axios.create(backendOptions)
 
 export const isSessionToken = (authorization: unknown) =>
   sessionToken !== null && authorization === `Bearer ${sessionToken}`
@@ -27,22 +28,17 @@ export const forgetAccessToken = () => {
 }
 
 export const loginRider = async (login: string, password: string): Promise<Rider> => {
-  const { data } = await axios.post<RiderLoginResponse>('/api/riders/login', { login, password })
+  const { data } = await riderHttp.post<RiderLoginResponse>('/riders/login', { login, password })
   sessionToken = data.access_token
   localStorage.setItem(ACCESS_TOKEN_KEY, data.access_token)
   api.setSecurityData(data.access_token)
   return data.rider
 }
 
-export const registerRider = async (login: string, password: string): Promise<Rider> => {
-  await axios.post<Rider>('/api/riders/register', { login, password })
-  return loginRider(login, password)
-}
-
 export const logoutRider = async () => {
   const accessToken = sessionToken
   forgetAccessToken()
   if (accessToken) {
-    await axios.post('/api/riders/logout', null, { headers: { Authorization: `Bearer ${accessToken}` } })
+    await riderHttp.post('/riders/logout', null, { headers: { Authorization: `Bearer ${accessToken}` } })
   }
 }

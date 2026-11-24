@@ -69,6 +69,7 @@ const MotorModeFeedPage: FC = () => {
         key={motorMode.id}
         className="feed__video"
         aria-label={`Видео режима ${motorMode.mode_name}`}
+        crossOrigin="anonymous"
         src={motorMode.video_url || DEFAULT_VIDEO}
         poster={motorMode.image_url || DEFAULT_IMAGE}
         autoPlay

@@ -1,6 +1,7 @@
 import { useState, type FC, type ReactNode } from 'react'
 import { Nav } from 'react-bootstrap'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
+import { PAGES_MOCK } from '../modules/pages'
 import { logoutRider } from '../modules/riderAuth'
 import { LOGOUT_LABEL, ROUTES, ROUTE_LABELS, type RouteKeyType } from '../Routes'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
@@ -54,31 +55,42 @@ export const TabBar: FC = () => {
   return (
     <>
       <Nav as="nav" className="tab-bar">
-        {TABS.map(({ key, icon, riderOnly }) =>
-          key === 'LOGIN' && isAuthenticated ? (
-            <Nav.Link key={key} as="button" type="button" className="tab-bar__link" onClick={handleLogout}>
+        {TABS.map(({ key, icon, riderOnly }) => {
+          const logout = key === 'LOGIN' && isAuthenticated && !PAGES_MOCK
+          const content = (
+            <>
               <svg className="tab-bar__icon" viewBox="0 0 24 24" aria-hidden="true">
-                {LOGOUT_ICON}
+                {logout ? LOGOUT_ICON : icon}
               </svg>
-              {LOGOUT_LABEL}
-            </Nav.Link>
-          ) : (
+              {logout ? LOGOUT_LABEL : ROUTE_LABELS[key]}
+            </>
+          )
+          if (logout) {
+            return (
+              <Nav.Link key={key} as="button" type="button" className="tab-bar__link" onClick={handleLogout}>
+                {content}
+              </Nav.Link>
+            )
+          }
+          if ((riderOnly && (!isAuthenticated || PAGES_MOCK)) || (key === 'LOGIN' && PAGES_MOCK)) {
+            return (
+              <span key={key} className="nav-link tab-bar__link disabled" aria-disabled="true">
+                {content}
+              </span>
+            )
+          }
+          return (
             <Nav.Link
               key={key}
               as={Link}
               to={ROUTES[key]}
-              disabled={riderOnly && !isAuthenticated}
-              tabIndex={riderOnly && !isAuthenticated ? -1 : undefined}
-              aria-disabled={riderOnly && !isAuthenticated}
+              aria-current={isActive(key) ? 'page' : undefined}
               className={`tab-bar__link${isActive(key) ? ' tab-bar__link--active' : ''}`}
             >
-              <svg className="tab-bar__icon" viewBox="0 0 24 24" aria-hidden="true">
-                {icon}
-              </svg>
-              {ROUTE_LABELS[key]}
+              {content}
             </Nav.Link>
-          ),
-        )}
+          )
+        })}
       </Nav>
       <LoadingOverlay show={loggingOut} />
     </>

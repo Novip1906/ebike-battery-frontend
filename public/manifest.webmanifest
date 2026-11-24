@@ -1,0 +1,16 @@
+{
+  "id": "./",
+  "name": "Режимы работы мотора электровелосипеда",
+  "short_name": "Режимы мотора",
+  "lang": "ru",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eff1f2",
+  "theme_color": "#007bc0",
+  "icons": [
+    { "src": "icons/battery-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/battery-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/battery-maskable-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,6 +1,5 @@
 import { type FC, useEffect } from 'react'
 import { Alert } from 'react-bootstrap'
-import { useNavigate } from 'react-router-dom'
 import { ConsumptionFilter } from '../components/ConsumptionFilter'
 import { MotorModeCard } from '../components/MotorModeCard'
 import { ROUTES } from '../Routes'
@@ -9,7 +8,6 @@ import { deleteMotorMode, getMotorModesList, setMaxConsumptionWhPerKm } from '..
 
 const MotorModesPage: FC = () => {
   const dispatch = useAppDispatch()
-  const navigate = useNavigate()
   const { isAuthenticated, login } = useAppSelector((state) => state.rider)
   const { motorModes, maxConsumptionWhPerKm, consumptionMin, consumptionMax, loaded, loading, error } = useAppSelector(
     (state) => state.motorModes,
@@ -19,8 +17,6 @@ const MotorModesPage: FC = () => {
     const request = dispatch(getMotorModesList())
     return () => request.abort()
   }, [dispatch, isAuthenticated])
-
-  const handleCardClick = (id: number) => navigate(`${ROUTES.FEED}/${id}`)
 
   const handleDelete = async (id: number) => {
     const result = await dispatch(deleteMotorMode(id))
@@ -54,7 +50,7 @@ const MotorModesPage: FC = () => {
           <MotorModeCard
             key={motorMode.id}
             motorMode={motorMode}
-            onClick={handleCardClick}
+            to={`${ROUTES.FEED}/${motorMode.id}`}
             onDelete={isAuthenticated && motorMode.created_by_current_rider === 1 ? handleDelete : undefined}
             disabled={loading}
           />
