@@ -44,10 +44,12 @@ export default defineConfig(({ mode }) => {
       },
     ],
     base: pages ? '/ebike-battery-frontend/' : '/',
+    cacheDir: `node_modules/.vite/${mode}`,
     build: { outDir: pages ? 'dist-pages' : 'dist' },
     preview: server,
     server: {
       ...server,
+      watch: { ignored: ['**/dist-pages/**'] },
       fs: { deny: ['.env', '.env.*', '*.{crt,cer,pem}', '**/.git/**', '**/.certs/**'] },
     },
   }
