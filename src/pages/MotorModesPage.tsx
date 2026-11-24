@@ -27,9 +27,7 @@ const MotorModesPage: FC = () => {
     <main className="grid-screen">
       <header>
         <h1 className="grid-screen__title">Режимы работы мотора</h1>
-        <p className="grid-screen__subtitle">
-          {isAuthenticated ? `Велосипедист ${login}` : 'Оценка времени разряда аккумулятора электровелосипеда'}
-        </p>
+        {isAuthenticated && <p className="grid-screen__subtitle">Велосипедист {login}</p>}
       </header>
 
       {error && <Alert className="screen-error">{error}</Alert>}

@@ -62,8 +62,12 @@ body {
   overflow-wrap: anywhere;
 }
 
+.grid-screen > header {
+  margin-bottom: 16px;
+}
+
 .grid-screen__subtitle {
-  margin: 4px 0 16px;
+  margin: 4px 0 0;
   font-size: 14px;
   color: var(--bosch-gray-50);
 }
@@ -816,7 +820,7 @@ button.tab-bar__link {
     margin: 0;
   }
 
-  .grid-screen__subtitle {
+  .grid-screen > header {
     margin-bottom: 0;
   }
 
