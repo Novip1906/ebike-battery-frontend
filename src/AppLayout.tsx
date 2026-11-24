@@ -6,7 +6,7 @@ import { useAppSelector } from './store/hooks'
 
 export const AppLayout: FC = () => {
   const loading = useAppSelector(
-    (state) => state.motorModes.loading || state.motorModeFeed.loading || state.motorModeDraft.loading,
+    (state) => state.rider.authPending || state.motorModes.loading || state.motorModeFeed.loading || state.motorModeDraft.loading,
   )
 
   return (

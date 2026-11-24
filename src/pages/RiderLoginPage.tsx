@@ -1,34 +1,32 @@
 import { type FC, type FormEvent, useState } from 'react'
 import { Alert, Button, Form } from 'react-bootstrap'
 import { Navigate, useLocation } from 'react-router-dom'
-import { LoadingOverlay } from '../components/LoadingOverlay'
 import { errorMessage } from '../modules/errors'
 import { loginRider } from '../modules/riderAuth'
 import { ROUTES } from '../Routes'
 import { useAppDispatch, useAppSelector } from '../store/hooks'
-import { setRider } from '../store/riderSlice'
+import { setAuthPending, setRider } from '../store/riderSlice'
 
 const RiderLoginPage: FC = () => {
   const dispatch = useAppDispatch()
   const location = useLocation()
-  const isAuthenticated = useAppSelector((state) => state.rider.isAuthenticated)
+  const { isAuthenticated, authPending } = useAppSelector((state) => state.rider)
   const [login, setLogin] = useState('')
   const [password, setPassword] = useState('')
   const [error, setError] = useState<string | null>(null)
-  const [submitting, setSubmitting] = useState(false)
 
   if (isAuthenticated) return <Navigate to={(location.state as { from?: string } | null)?.from ?? ROUTES.GRID} replace />
 
   const handleSubmit = async (event: FormEvent) => {
     event.preventDefault()
-    setSubmitting(true)
+    dispatch(setAuthPending(true))
     setError(null)
     try {
       const rider = await loginRider(login.trim(), password)
       dispatch(setRider(rider))
     } catch (authError) {
       setError(errorMessage(authError, 'Не удалось войти: веб-сервис недоступен.'))
-      setSubmitting(false)
+      dispatch(setAuthPending(false))
     }
   }
 
@@ -65,12 +63,10 @@ const RiderLoginPage: FC = () => {
           />
         </Form.Group>
 
-        <Button className="button button--primary button--wide" type="submit" disabled={submitting}>
+        <Button className="button button--primary button--wide" type="submit" disabled={authPending}>
           Войти
         </Button>
       </Form>
-
-      <LoadingOverlay show={submitting} />
     </main>
   )
 }

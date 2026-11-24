@@ -56,7 +56,7 @@ npm run generate-api
 
 | Срез | Что хранит | Thunk |
 |---|---|---|
-| `rider` | логин велосипедиста, `isAuthenticated` | вход и выход через axios без thunk |
+| `rider` | логин велосипедиста, `isAuthenticated`, ожидание входа или выхода (`authPending`) | вход и выход через axios без thunk |
 | `motorModes` | фильтр `maxConsumptionWhPerKm`, карточки плитки, границы расхода | `getMotorModesList`, `deleteMotorMode` |
 | `motorModeFeed` | текущий режим ленты | `getMotorModeFeed`, `likeMotorMode` |
 | `motorModeDraft` | черновик режима велосипедиста | `getMotorModeDraft`, `createMotorModeDraft`, `publishMotorModeDraft`, `deleteMotorModeDraft` |
