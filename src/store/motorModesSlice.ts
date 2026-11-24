@@ -2,7 +2,7 @@ import { createSlice, type PayloadAction } from '@reduxjs/toolkit'
 import { api } from '../api'
 import { errorMessage, isBackendUnavailable, rejectMessage } from '../modules/errors'
 import { motorModesMock, toMotorModesResult, type MotorModeCardData, type MotorModesResult } from '../modules/motorModes'
-import { PAGES_MOCK } from '../modules/pages'
+import { GUEST_FALLBACK, PAGES_MOCK } from '../modules/pages'
 import { createMotorModeThunk } from './hooks'
 import { resetRider } from './riderSlice'
 
@@ -42,7 +42,7 @@ export const getMotorModesList = createMotorModeThunk(
       return toMotorModesResult(data)
     } catch (error) {
       return rejectWithValue({
-        guest: !rider.isAuthenticated && isBackendUnavailable(error),
+        guest: GUEST_FALLBACK && !rider.isAuthenticated && isBackendUnavailable(error),
         message: errorMessage(error, 'Не удалось загрузить режимы работы мотора.'),
       })
     }

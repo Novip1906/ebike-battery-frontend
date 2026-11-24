@@ -5,7 +5,7 @@
   --bosch-turquoise: #18837e;
   --bosch-red: #ed0007;
   --bosch-gray-10: #1a1c1d;
-  --bosch-gray-50: #71767c;
+  --bosch-gray-50: #62686e;
   --bosch-gray-80: #c1c7cc;
   --bosch-gray-90: #e0e2e5;
   --bosch-gray-95: #eff1f2;
@@ -279,6 +279,25 @@ body {
     max(var(--page-gutter), env(safe-area-inset-left, 0px));
   background: linear-gradient(180deg, rgba(26, 28, 29, 0.55) 0%, rgba(26, 28, 29, 0) 35%, rgba(26, 28, 29, 0.75) 100%);
   color: var(--bosch-white);
+}
+
+.feed__heading {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 12px;
+}
+
+.feed__playback {
+  flex: none;
+  display: grid;
+  place-items: center;
+  width: 44px;
+  height: 44px;
+  color: white;
+  background: rgba(26, 28, 29, 0.75);
+  border: 1px solid rgba(255, 255, 255, 0.45);
+  border-radius: var(--radius-button);
 }
 
 .feed__title {
@@ -592,7 +611,7 @@ body {
   border-radius: var(--radius-button);
   background-color: rgba(237, 0, 7, 0.08);
   font-size: 14px;
-  color: var(--bosch-red);
+  color: #a80005;
 }
 
 .feed__error {

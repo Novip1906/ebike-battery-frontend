@@ -10,9 +10,11 @@ export const AppLayout: FC = () => {
   )
 
   return (
-    <div className="screen">
-      <Outlet />
-      <TabBar />
+    <div className="screen" aria-busy={loading}>
+      <div inert={loading}>
+        <Outlet />
+        <TabBar />
+      </div>
       <LoadingOverlay show={loading} />
     </div>
   )

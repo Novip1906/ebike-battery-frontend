@@ -33,6 +33,7 @@ export const ConsumptionFilter: FC<Props> = ({ value, min, max, onChange, onSear
         max={max}
         step={0.1}
         value={value}
+        disabled={disabled}
         onChange={(event) => onChange(Number(event.target.value))}
       />
       <div className="slider__scale">

@@ -16,6 +16,8 @@ const MotorModeFeedPage: FC = () => {
   const motorMode =
     currentMotorMode && (!motorModeId || Number(motorModeId) === currentMotorMode.id) ? currentMotorMode : null
   const [descriptionOpen, setDescriptionOpen] = useState(false)
+  const [videoPaused, setVideoPaused] = useState(true)
+  const videoRef = useRef<HTMLVideoElement>(null)
   const skipFetch = useRef(false)
   const mounted = useRef(false)
 
@@ -67,20 +69,40 @@ const MotorModeFeedPage: FC = () => {
     <main className="feed">
       <video
         key={motorMode.id}
+        ref={videoRef}
         className="feed__video"
         aria-label={`Видео режима ${motorMode.mode_name}`}
         crossOrigin="anonymous"
         src={motorMode.video_url || DEFAULT_VIDEO}
         poster={motorMode.image_url || DEFAULT_IMAGE}
-        autoPlay
+        autoPlay={!window.matchMedia('(prefers-reduced-motion: reduce)').matches}
         muted
         loop
         playsInline
+        onPlay={() => setVideoPaused(false)}
+        onPause={() => setVideoPaused(true)}
+        onLoadedData={(event) => setVideoPaused(event.currentTarget.paused)}
         onError={handleVideoError}
       />
 
       <div className="feed__overlay">
-        <h1 className="feed__title">{motorMode.mode_name}</h1>
+        <header className="feed__heading">
+          <h1 className="feed__title">{motorMode.mode_name}</h1>
+          <button
+            type="button"
+            className="feed__playback"
+            aria-label={videoPaused ? 'Воспроизвести видео' : 'Приостановить видео'}
+            onClick={() => {
+              const video = videoRef.current
+              if (video?.paused) void video.play().catch(() => setVideoPaused(true))
+              else video?.pause()
+            }}
+          >
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true">
+              <path d={videoPaused ? 'M7 4v16l13-8z' : 'M6 4h4v16H6zm8 0h4v16h-4z'} />
+            </svg>
+          </button>
+        </header>
 
         {error && <Alert className="screen-error feed__error">{error}</Alert>}
 
