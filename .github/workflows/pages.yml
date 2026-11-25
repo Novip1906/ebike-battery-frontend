@@ -13,31 +13,26 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build:
+  publish:
+    if: github.ref == 'refs/heads/motor_modes_pwa'
+    permissions:
+      contents: write
+      pages: write
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v7.0.1
+        with:
+          persist-credentials: false
       - uses: actions/setup-node@v7.1.0
         with:
           node-version: 24
           cache: npm
       - run: npm ci
       - run: npm run lint
-      - run: npm run build:pages
-      - uses: actions/upload-pages-artifact@v5.0.0
-        with:
-          path: dist-pages
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-    permissions:
-      pages: write
-      id-token: write
-    environment:
-      name: github-pages
-      url: ${{ steps.publish.outputs.page_url }}
-    steps:
-      - name: Publish
-        id: publish
-        uses: actions/deploy-pages@v5.0.1
+      - name: Publish bundle to gh-pages
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          gh auth setup-git
+          npm run deploy -- --user 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
+          gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds" --silent
