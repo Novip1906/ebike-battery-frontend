@@ -34,5 +34,7 @@ jobs:
           GH_TOKEN: ${{ github.token }}
         run: |
           gh auth setup-git
-          npm run deploy -- --user 'github-actions[bot] <41898282+github-actions[bot]@users.noreply.github.com>'
+          git config --global user.name 'github-actions[bot]'
+          git config --global user.email '41898282+github-actions[bot]@users.noreply.github.com'
+          npm run deploy
           gh api --method POST "repos/$GITHUB_REPOSITORY/pages/builds" --silent
